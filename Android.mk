@@ -52,10 +52,12 @@ libcxx_export_cxxflags :=
 
 libcxx_cxxflags := \
     -std=c++1z \
+    -fvisibility-global-new-delete-hidden \
     -DLIBCXX_BUILDING_LIBCXXABI \
     -D_LIBCPP_NO_EXCEPTIONS \
     -D_LIBCPP_NO_RTTI \
     -D_LIBCPP_BUILDING_LIBRARY \
+    -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS \
     -D__STDC_FORMAT_MACROS \
     $(libcxx_export_cxxflags) \
 
