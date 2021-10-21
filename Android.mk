@@ -53,12 +53,14 @@ libcxx_export_cxxflags :=
 libcxx_cxxflags := \
     -std=c++1z \
     -fvisibility-global-new-delete-hidden \
+    -fvisibility=hidden -fvisibility-inlines-hidden \
     -DLIBCXX_BUILDING_LIBCXXABI \
     -D_LIBCPP_NO_EXCEPTIONS \
     -D_LIBCPP_NO_RTTI \
     -D_LIBCPP_BUILDING_LIBRARY \
     -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS \
     -D__STDC_FORMAT_MACROS \
+    -D__ANDROID_API__=1 \
     $(libcxx_export_cxxflags) \
 
 
@@ -70,7 +72,6 @@ libcxxabi_src_files := \
     abort_message.cpp \
     cxa_aux_runtime.cpp \
     cxa_default_handlers.cpp \
-    cxa_demangle.cpp \
     cxa_exception_storage.cpp \
     cxa_guard.cpp \
     cxa_handlers.cpp \
@@ -79,7 +80,6 @@ libcxxabi_src_files := \
     cxa_unexpected.cpp \
     cxa_vector.cpp \
     cxa_virtual.cpp \
-    fallback_malloc.cpp \
     stdlib_exception.cpp \
     stdlib_new_delete.cpp \
     stdlib_stdexcept.cpp \
