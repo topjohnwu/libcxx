@@ -60,7 +60,6 @@ libcxx_cxxflags := \
     -D_LIBCPP_BUILDING_LIBRARY \
     -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS \
     -D__STDC_FORMAT_MACROS \
-    -D__ANDROID_API__=1 \
     $(libcxx_export_cxxflags) \
 
 
