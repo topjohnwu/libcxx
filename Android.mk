@@ -105,6 +105,5 @@ LOCAL_CPPFLAGS := $(libcxx_cxxflags) $(libcxxabi_cppflags) -ffunction-sections -
 LOCAL_EXPORT_C_INCLUDES := $(libcxx_export_includes)
 LOCAL_EXPORT_CPPFLAGS := $(libcxx_export_cxxflags)
 LOCAL_EXPORT_LDFLAGS := $(libcxx_export_ldflags)
-LOCAL_ARM_NEON := false
 
 include $(BUILD_STATIC_LIBRARY)
