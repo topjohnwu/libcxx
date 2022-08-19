@@ -8,10 +8,15 @@
 
 // <array>
 
-// template <class T, size_t N >
+// template <class T, size_t N>
 // struct array
 
 // Test the size and alignment matches that of an array of a given type.
+
+// Ignore error about requesting a large alignment not being ABI compatible with older AIX systems.
+#if defined(_AIX)
+# pragma clang diagnostic ignored "-Waix-compat"
+#endif
 
 #include <array>
 #include <iterator>
@@ -19,7 +24,6 @@
 #include <cstddef>
 
 #include "test_macros.h"
-
 
 template <class T, size_t Size>
 struct MyArray {
@@ -34,12 +38,6 @@ void test() {
   static_assert(sizeof(ArrayT) == sizeof(CArrayT), "");
   static_assert(sizeof(ArrayT) == sizeof(MyArrayT), "");
   static_assert(TEST_ALIGNOF(ArrayT) == TEST_ALIGNOF(MyArrayT), "");
-#if defined(_LIBCPP_VERSION)
-  ArrayT a;
-  ((void)a);
-  static_assert(sizeof(ArrayT) == sizeof(a.__elems_), "");
-  static_assert(TEST_ALIGNOF(ArrayT) == __alignof__(a.__elems_), "");
-#endif
 }
 
 template <class T>
@@ -49,25 +47,19 @@ void test_type() {
   test<T, 0>();
 }
 
-#ifdef __STDCPP_DEFAULT_NEW_ALIGNMENT__
-struct TEST_ALIGNAS(__STDCPP_DEFAULT_NEW_ALIGNMENT__ * 2) TestType1 {
+#if TEST_STD_VER >= 11
+struct alignas(alignof(std::max_align_t) * 2) TestType1 {
 
 };
 
-struct TEST_ALIGNAS(__STDCPP_DEFAULT_NEW_ALIGNMENT__ * 2) TestType2 {
+struct alignas(alignof(std::max_align_t) * 2) TestType2 {
   char data[1000];
 };
-#else
-struct TEST_ALIGNAS(TEST_ALIGNOF(std::max_align_t) * 2) TestType1 {
 
-};
-
-struct TEST_ALIGNAS(TEST_ALIGNOF(std::max_align_t) * 2) TestType2 {
+struct alignas(alignof(std::max_align_t)) TestType3 {
   char data[1000];
 };
 #endif
-
-//static_assert(sizeof(void*) == 4, "");
 
 int main(int, char**) {
   test_type<char>();
@@ -77,9 +69,10 @@ int main(int, char**) {
 
 #if TEST_STD_VER >= 11
   test_type<std::max_align_t>();
-#endif
   test_type<TestType1>();
   test_type<TestType2>();
+  test_type<TestType3>();
+#endif
 
   return 0;
 }

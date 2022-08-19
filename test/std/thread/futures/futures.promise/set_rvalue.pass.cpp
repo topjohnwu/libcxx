@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03
-// UNSUPPORTED: libcpp-has-no-threads, no-exceptions
+// UNSUPPORTED: c++03
+// UNSUPPORTED: no-threads, no-exceptions
 
 // <future>
 

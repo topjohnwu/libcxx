@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -11,9 +10,8 @@
 
 // void* operator new[](std::size_t);
 
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
-// REQUIRES: verify-support
 // REQUIRES: -faligned-allocation
 // ADDITIONAL_COMPILE_FLAGS: -faligned-allocation
 

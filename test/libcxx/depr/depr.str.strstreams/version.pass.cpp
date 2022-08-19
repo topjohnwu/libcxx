@@ -6,6 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+// UNSUPPORTED: no-localization
+
 // <strstream>
 
 #include <strstream>

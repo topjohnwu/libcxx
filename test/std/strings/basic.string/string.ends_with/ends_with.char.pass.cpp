@@ -5,20 +5,19 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
 // <string>
 
-//   bool ends_with(charT x) const noexcept;
+// constexpr bool ends_with(charT x) const noexcept;
 
 #include <string>
 #include <cassert>
 
 #include "test_macros.h"
 
-int main(int, char**)
-{
-    {
+constexpr bool test() {
+  {
     typedef std::string S;
     S  s1 {};
     S  s2 { "abcde", 5 };
@@ -29,7 +28,15 @@ int main(int, char**)
     assert (!s1.ends_with('x'));
     assert ( s2.ends_with('e'));
     assert (!s2.ends_with('x'));
-    }
+  }
+
+  return true;
+}
+
+int main(int, char**)
+{
+  test();
+  static_assert(test());
 
   return 0;
 }

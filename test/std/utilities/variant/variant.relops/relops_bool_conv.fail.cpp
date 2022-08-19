@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -7,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03, c++11, c++14
+// UNSUPPORTED: c++03, c++11, c++14
 
 // <variant>
 
@@ -76,7 +75,7 @@ int main(int, char**) {
   using V = std::variant<int, ComparesToMyBoolExplicit>;
   V v1(42);
   V v2(101);
-  // expected-error-re@variant:* 6 {{static_assert failed {{.*}}"the relational operator does not return a type which is implicitly convertible to bool"}}
+  // expected-error-re@variant:* 6 {{{{(static_assert|static assertion)}} failed{{.*}}the relational operator does not return a type which is implicitly convertible to bool}}
   // expected-error@variant:* 6 {{no viable conversion}}
   (void)(v1 == v2); // expected-note {{here}}
   (void)(v1 != v2); // expected-note {{here}}

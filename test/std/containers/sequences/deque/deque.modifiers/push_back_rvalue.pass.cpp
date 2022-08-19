@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 
 // <deque>
 
@@ -53,7 +53,7 @@ void test(int size)
     {
         C c = make<C>(size, rng[j]);
         typename C::const_iterator it = c.begin();
-        for (int i = 0; i < size; ++i, ++it)
+        for (int i = 0; i < size; ++i, (void) ++it)
             assert(*it == MoveOnly(i));
     }
 }

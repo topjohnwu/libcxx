@@ -4,7 +4,7 @@
 LOCAL_PATH := $(call my-dir)
 
 # libcxx defines
-libcxx_includes := $(LOCAL_PATH)/include
+libcxx_includes := $(LOCAL_PATH)/include $(LOCAL_PATH)/src
 libcxx_export_includes := $(libcxx_includes)
 libcxx_sources := \
     algorithm.cpp \
@@ -25,13 +25,17 @@ libcxx_sources := \
     future.cpp \
     hash.cpp \
     ios.cpp \
+    ios.instantiations.cpp \
     iostream.cpp \
+    legacy_debug_handler.cpp \
+    legacy_pointer_safety.cpp \
     locale.cpp \
     memory.cpp \
     mutex.cpp \
     mutex_destructor.cpp \
     new.cpp \
     optional.cpp \
+    random_shuffle.cpp \
     random.cpp \
     regex.cpp \
     shared_mutex.cpp \
@@ -45,13 +49,14 @@ libcxx_sources := \
     valarray.cpp \
     variant.cpp \
     vector.cpp \
+    verbose_abort.cpp \
 
 libcxx_sources := $(libcxx_sources:%=src/%)
 
 libcxx_export_cxxflags :=
 
 libcxx_cxxflags := \
-    -std=c++1z \
+    -std=c++20 \
     -fvisibility-global-new-delete-hidden \
     -fvisibility=hidden -fvisibility-inlines-hidden \
     -DLIBCXX_BUILDING_LIBCXXABI \
@@ -76,7 +81,6 @@ libcxxabi_src_files := \
     cxa_handlers.cpp \
     cxa_noexception.cpp \
     cxa_thread_atexit.cpp \
-    cxa_unexpected.cpp \
     cxa_vector.cpp \
     cxa_virtual.cpp \
     stdlib_exception.cpp \

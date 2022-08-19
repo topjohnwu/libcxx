@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03, c++11
-// <chrono>
+// UNSUPPORTED: c++03, c++11
+// <complex>
 
 #include <complex>
 #include <type_traits>

@@ -13,7 +13,7 @@
 // template <class Alloc, class U1, class U2>
 //   tuple(allocator_arg_t, const Alloc& a, const pair<U1, U2>&);
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 
 #include <tuple>
 #include <utility>
@@ -56,6 +56,13 @@ int main(int, char**)
         assert(std::get<0>(t1) == 2);
         assert(std::get<1>(t1) == 3);
     }
+    {
+        // Test that we can use a tag derived from allocator_arg_t
+        struct DerivedFromAllocatorArgT : std::allocator_arg_t { };
+        DerivedFromAllocatorArgT derived;
+        std::pair<int, int> p(1, 2);
+        std::tuple<int, int> t(derived, A1<int>(), p);
+    }
 
-  return 0;
+    return 0;
 }

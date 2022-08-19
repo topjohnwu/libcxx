@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03, c++11, c++14
+// UNSUPPORTED: c++03, c++11, c++14
 
 // <tuple>
 
@@ -21,10 +21,7 @@
 #include <utility>
 #include <cassert>
 
-// std::array is explicitly allowed to be initialized with A a = { init-list };.
-// Disable the missing braces warning for this reason.
 #include "test_macros.h"
-#include "disable_missing_braces_warning.h"
 
 int count = 0;
 

@@ -2,8 +2,4 @@
 
 LLVM libc++, specifically for Android, removing exception and RTTI support.
 
-Source code is extracted from AOSP's `llvm-project` repository:
-
-```
-git clone https://android.googlesource.com/toolchain/llvm-project -b ndk-release-r23
-```
+Source code is extracted from both the upstrean and AOSP `llvm-project` repository.

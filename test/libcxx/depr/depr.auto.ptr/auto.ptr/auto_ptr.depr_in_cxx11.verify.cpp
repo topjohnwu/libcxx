@@ -18,9 +18,7 @@
 //
 // Deprecated in C++11
 
-// UNSUPPORTED: clang-4.0
-// UNSUPPORTED: c++98, c++03
-// REQUIRES: verify-support
+// UNSUPPORTED: c++03
 
 // ADDITIONAL_COMPILE_FLAGS: -D_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR
 

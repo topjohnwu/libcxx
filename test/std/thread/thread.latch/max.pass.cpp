@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// UNSUPPORTED: libcpp-has-no-threads
-// UNSUPPORTED: c++98, c++03, c++11
+// UNSUPPORTED: no-threads
+// UNSUPPORTED: c++03, c++11
 
 // <latch>
 

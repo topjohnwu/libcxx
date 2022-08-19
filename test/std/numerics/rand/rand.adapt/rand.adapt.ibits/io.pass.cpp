@@ -6,6 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+// UNSUPPORTED: no-localization
+
 // <random>
 
 // template<class Engine, size_t w, class UIntType>

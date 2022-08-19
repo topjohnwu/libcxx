@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -12,8 +11,7 @@
 // <iterator>
 // template <class C> constexpr auto empty(const C& c) -> decltype(c.empty());
 
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
-// REQUIRES: verify-support
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
 #include <vector>
 #include <iterator>

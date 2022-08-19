@@ -5,20 +5,19 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
 // <string>
 
-//   bool starts_with(const CharT *x) const;
+// constexpr bool starts_with(const CharT *x) const;
 
 #include <string>
 #include <cassert>
 
 #include "test_macros.h"
 
-int main(int, char**)
-{
-    {
+constexpr bool test() {
+  {
     typedef std::string S;
     const char *s = "abcde";
     S  s0 {};
@@ -57,7 +56,15 @@ int main(int, char**)
     assert (!sNot.starts_with("abcd"));
     assert (!sNot.starts_with("abcde"));
     assert ( sNot.starts_with("def"));
-    }
+  }
+
+  return true;
+}
+
+int main(int, char**)
+{
+  test();
+  static_assert(test());
 
   return 0;
 }

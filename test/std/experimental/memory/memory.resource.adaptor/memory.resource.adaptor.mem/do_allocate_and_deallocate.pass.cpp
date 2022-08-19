@@ -6,7 +6,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
+
+// test_memory_resource requires RTTI for dynamic_cast
+// UNSUPPORTED: no-rtti
 
 // <experimental/memory_resource>
 
@@ -99,7 +102,7 @@ void check_alloc_max_size() {
         try {
             m1.allocate(size);
             assert(false);
-        } catch (std::exception const&) {
+        } catch (std::bad_array_new_length const&) {
         }
     }
 #endif

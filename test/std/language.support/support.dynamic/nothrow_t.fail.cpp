@@ -7,11 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03
-
-// Before GCC 6, aggregate initialization kicks in.
-// See https://stackoverflow.com/q/41799015/627587.
-// UNSUPPORTED: gcc-5
+// UNSUPPORTED: c++03
 
 // struct nothrow_t {
 //   explicit nothrow_t() = default;

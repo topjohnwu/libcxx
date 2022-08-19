@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
 // type_traits
 
@@ -31,9 +31,6 @@ void test_array()
     test_array_imp<volatile T, B>();
     test_array_imp<const volatile T, B>();
 }
-
-typedef char array[3];
-typedef char incomplete_array[];
 
 class incomplete_type;
 
@@ -65,8 +62,9 @@ int main(int, char**)
     test_array<FunctionPtr,    false>();
 
 //  Array types
-    test_array<array,             true>();
-    test_array<incomplete_array,  false>();
+    test_array<char[3],           true>();
+    test_array<int[0],            false>();
+    test_array<char[],            false>();
     test_array<incomplete_type[], false>();
 
   return 0;

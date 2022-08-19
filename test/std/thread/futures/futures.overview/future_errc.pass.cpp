@@ -6,9 +6,9 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// UNSUPPORTED: libcpp-has-no-threads
+// UNSUPPORTED: no-threads
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 // Libc++'s enum class emulation does not allow static_cast<Enum>(0) to work.
 
 // <future>

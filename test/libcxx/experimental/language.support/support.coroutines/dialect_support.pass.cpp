@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -8,13 +7,15 @@
 //===----------------------------------------------------------------------===//
 
 // REQUIRES: fcoroutines-ts
-// ADDITIONAL_COMPILE_FLAGS: -fcoroutines-ts
+// ADDITIONAL_COMPILE_FLAGS: -fcoroutines-ts -Wno-coroutine
 
 // A simple "breathing" test that checks that <experimental/coroutine>
 // can be parsed and used in all dialects, including C++03 in order to match
 // Clang's behavior.
 
 #include <experimental/coroutine>
+
+#include "test_macros.h"
 
 namespace coro = std::experimental::coroutines_v1;
 
@@ -25,7 +26,7 @@ struct MyFuture {
   struct promise_type {
     typedef coro::coroutine_handle<promise_type> HandleT;
     coro::suspend_never initial_suspend() { return sn; }
-    coro::suspend_always final_suspend() { return sa; }
+    coro::suspend_always final_suspend() TEST_NOEXCEPT { return sa; }
     coro::suspend_never yield_value(int) { return sn; }
     MyFuture get_return_object() {
       MyFuture f(HandleT::from_promise(*this));

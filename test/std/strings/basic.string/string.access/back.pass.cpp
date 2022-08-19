@@ -8,12 +8,8 @@
 
 // <string>
 
-// const charT& back() const;
-//       charT& back();
-
-#ifdef _LIBCPP_DEBUG
-#define _LIBCPP_ASSERT(x, m) ((x) ? (void)0 : std::exit(0))
-#endif
+// const charT& back() const; // constexpr since C++20
+//       charT& back(); // constexpr since C++20
 
 #include <string>
 #include <cassert>
@@ -22,7 +18,7 @@
 #include "min_allocator.h"
 
 template <class S>
-void
+TEST_CONSTEXPR_CXX20 void
 test(S s)
 {
     const S& cs = s;
@@ -36,26 +32,28 @@ test(S s)
     assert(s.back() == typename S::value_type('z'));
 }
 
-int main(int, char**)
-{
-    {
+TEST_CONSTEXPR_CXX20 bool test() {
+  {
     typedef std::string S;
     test(S("1"));
     test(S("1234567890123456789012345678901234567890"));
-    }
+  }
 #if TEST_STD_VER >= 11
-    {
+  {
     typedef std::basic_string<char, std::char_traits<char>, min_allocator<char>> S;
     test(S("1"));
     test(S("1234567890123456789012345678901234567890"));
-    }
+  }
 #endif
-#ifdef _LIBCPP_DEBUG
-    {
-        std::string s;
-        (void) s.back();
-        assert(false);
-    }
+
+  return true;
+}
+
+int main(int, char**)
+{
+  test();
+#if TEST_STD_VER > 17
+  static_assert(test());
 #endif
 
   return 0;

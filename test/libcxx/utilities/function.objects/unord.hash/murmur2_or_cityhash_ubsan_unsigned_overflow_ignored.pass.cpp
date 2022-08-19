@@ -9,10 +9,11 @@
 // Test that UBSAN doesn't generate unsigned integer overflow diagnostics
 // from within the hashing internals.
 
-#include <utility>
 #include <cstdint>
+#include <functional>
 #include <limits>
 #include <string>
+#include <utility>
 
 #include "test_macros.h"
 
@@ -30,7 +31,7 @@ void test(const void* key, int len) {
 
 int main(int, char**) {
   const std::string TestCases[] = {
-      "abcdaoeuaoeclaoeoaeuaoeuaousaotehu]+}sthoasuthaoesutahoesutaohesutaoeusaoetuhasoetuhaoseutaoseuthaoesutaohes"
+      "abcdaoeuaoeclaoeoaeuaoeuaousaotehu]+}sthoasuthaoesutahoesutaohesutaoeusaoetuhasoetuhaoseutaoseuthaoesutaohes",
       "00000000000000000000000000000000000000000000000000000000000000000000000",
       "1237546895+54+4554985416849484213464984765465464654564565645645646546456546546"
   };

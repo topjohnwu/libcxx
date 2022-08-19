@@ -6,14 +6,15 @@
 //
 //===----------------------------------------------------------------------===//
 
-// FILE_DEPENDENCIES: %t.exe
+// UNSUPPORTED: c++03
+
 // RUN: %{build} -O2
 // RUN: %{run}
 
 // <map>
 
 // Previously this code caused a segfault when compiled at -O2 due to undefined
-// behavior in __tree. See https://bugs.llvm.org/show_bug.cgi?id=28469
+// behavior in __tree. See https://llvm.org/PR28469
 
 #include <functional>
 #include <map>

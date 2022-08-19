@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //===----------------------------------------------------------------------===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -7,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03, c++11
+// UNSUPPORTED: c++03, c++11
 
 #include <experimental/coroutine>
 #include <cassert>
@@ -46,9 +45,7 @@ struct goroutine
     suspend_never initial_suspend() {
       return {};
     }
-    suspend_never final_suspend() {
-      return {};
-    }
+    suspend_never final_suspend() noexcept { return {}; }
     void return_void() {}
     goroutine get_return_object() {
       return{};

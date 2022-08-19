@@ -11,13 +11,14 @@
 
 // Check that libc++'s emulation of std::function is deprecated in C++03
 
-// REQUIRES: c++98 || c++03
-// REQUIRES: verify-support
+// REQUIRES: c++03
+
+// ADDITIONAL_COMPILE_FLAGS: -D_LIBCPP_ENABLE_CXX03_FUNCTION
 
 #include <functional>
 #include "test_macros.h"
 
-int main() {
+int main(int, char**) {
     // Note:
     // We use sizeof() to require it to be a complete type. We don't create a
     // variable because otherwise we get two warnings for each variable (the
@@ -26,4 +27,5 @@ int main() {
     (void)sizeof(std::function<void (int)>); // expected-warning {{'function<void (int)>' is deprecated}}
     (void)sizeof(std::function<void (int, int)>); // expected-warning {{'function<void (int, int)>' is deprecated}}
     (void)sizeof(std::function<void (int, int, int)>); // expected-warning {{'function<void (int, int, int)>' is deprecated}}
+    return 0;
 }

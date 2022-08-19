@@ -5,11 +5,12 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 
 // <string_view>
 
-//   constexpr bool starts_with(const CharT *x) const;
+//   constexpr bool ends_with(const CharT *x) const;
 
 #include <string_view>
 #include <cassert>
@@ -25,9 +26,6 @@ int main(int, char**)
     SV  sv0 {};
     SV  sv1 { s + 4, 1 };
     SV  sv2 { s + 3, 2 };
-//     SV  sv3 { s + 2, 3 };
-//     SV  sv4 { s + 1, 4 };
-//     SV  sv5 { s    , 5 };
     SV  svNot {"def", 3 };
 
     LIBCPP_ASSERT_NOEXCEPT(sv0.ends_with(""));
@@ -67,9 +65,6 @@ int main(int, char**)
     constexpr SV  sv0 {};
     constexpr SV  sv1 { s + 4, 1 };
     constexpr SV  sv2 { s + 3, 2 };
-//     constexpr SV  sv3 { s + 2, 3 };
-//     constexpr SV  sv4 { s + 1, 4 };
-//     constexpr SV  sv5 { s,     5 };
     constexpr SV  svNot {"def", 3 };
 
     static_assert ( sv0.ends_with(""), "" );

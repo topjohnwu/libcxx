@@ -6,6 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+// UNSUPPORTED: no-localization
+
 // test:
 
 // template <class charT, class traits, size_t N>

@@ -38,8 +38,17 @@ int main(int, char**)
         std::valarray<bool> v2 = !(v + v);
         assert(v2.size() == v.size());
         for (std::size_t i = 0; i < v2.size(); ++i)
-            assert(v2[i] == !(2 * v[i]));
+            assert(v2[i] == !(v[i] + v[i]));
+    }
+    {
+        // Make sure we don't have dangling reference problems with unary expressions
+        bool array[] = {true, false, true};
+        std::valarray<bool> a(array, 3);
+        std::valarray<bool> b(array, 3);
+        auto c = !a && b;
+        assert(c.size() == 3);
+        assert(c[0] == false && c[1] == false && c[2] == false);
     }
 
-  return 0;
+    return 0;
 }

@@ -46,10 +46,11 @@ int main(int, char**)
     test<bool>();
     test<char>();
     test<wchar_t>();
-#ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
+#if TEST_STD_VER > 17 && defined(__cpp_char8_t)
+    test<char8_t>();
+#endif
     test<char16_t>();
     test<char32_t>();
-#endif  // _LIBCPP_HAS_NO_UNICODE_CHARS
     test<signed char>();
     test<unsigned char>();
     test<signed short>();
@@ -60,7 +61,7 @@ int main(int, char**)
     test<unsigned long>();
     test<signed long long>();
     test<unsigned long long>();
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef TEST_HAS_NO_INT128
     test<__int128_t>();
     test<__uint128_t>();
 #endif

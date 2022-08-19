@@ -6,8 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// FILE_DEPENDENCIES: ../../Inputs/static_test_env
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 
 // <filesystem>
 
@@ -24,7 +23,6 @@
 #include "test_macros.h"
 #include "rapid-cxx-test.h"
 #include "filesystem_test_helper.h"
-#include <iostream>
 
 using namespace fs;
 
@@ -32,20 +30,25 @@ TEST_SUITE(directory_iterator_begin_end_tests)
 
 TEST_CASE(test_function_signatures)
 {
-    directory_iterator d; ((void)d);
+    directory_iterator d;
 
     ASSERT_SAME_TYPE(decltype(begin(d)), directory_iterator);
+    ASSERT_SAME_TYPE(decltype(begin(std::move(d))), directory_iterator);
+    ASSERT_NOEXCEPT(begin(d));
     ASSERT_NOEXCEPT(begin(std::move(d)));
 
     ASSERT_SAME_TYPE(decltype(end(d)), directory_iterator);
+    ASSERT_SAME_TYPE(decltype(end(std::move(d))), directory_iterator);
+    ASSERT_NOEXCEPT(end(d));
     ASSERT_NOEXCEPT(end(std::move(d)));
 }
 
 TEST_CASE(test_ranged_for_loop)
 {
-    const path testDir = StaticEnv::Dir;
-    std::set<path> dir_contents(std::begin(StaticEnv::DirIterationList),
-                                      std::end(  StaticEnv::DirIterationList));
+    static_test_env static_env;
+    const path testDir = static_env.Dir;
+    std::set<path> dir_contents(static_env.DirIterationList.begin(),
+                                static_env.DirIterationList.end());
 
     std::error_code ec;
     directory_iterator it(testDir, ec);

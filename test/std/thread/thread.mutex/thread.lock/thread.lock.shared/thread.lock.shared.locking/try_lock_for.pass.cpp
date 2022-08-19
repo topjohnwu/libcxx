@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// UNSUPPORTED: libcpp-has-no-threads
-// UNSUPPORTED: c++98, c++03, c++11
+// UNSUPPORTED: no-threads
+// UNSUPPORTED: c++03, c++11
 
 // <shared_mutex>
 
@@ -18,6 +18,8 @@
 
 #include <shared_mutex>
 #include <cassert>
+#include <chrono>
+#include <mutex>
 
 #include "test_macros.h"
 

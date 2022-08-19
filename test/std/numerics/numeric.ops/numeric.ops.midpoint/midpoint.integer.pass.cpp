@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// UNSUPPORTED: c++98, c++03, c++11, c++14, c++17
+// UNSUPPORTED: c++03, c++11, c++14, c++17
 // <numeric>
 
 // template <class _Tp>
@@ -129,7 +129,7 @@ int main(int, char**)
     unsigned_test<uint32_t>();
     unsigned_test<uint64_t>();
 
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef TEST_HAS_NO_INT128
     unsigned_test<__uint128_t>();
     signed_test<__int128_t>();
 #endif

@@ -14,13 +14,10 @@
 
 // size_type bucket_size(size_type n) const
 
-#ifdef _LIBCPP_DEBUG
-#define _LIBCPP_ASSERT(x, m) ((x) ? (void)0 : std::exit(0))
-#endif
-
 #include <unordered_map>
 #include <string>
 #include <cassert>
+#include <iterator>
 
 #include "test_macros.h"
 #include "min_allocator.h"
@@ -74,14 +71,6 @@ int main(int, char**)
         LIBCPP_ASSERT(c.bucket_size(6) == 0);
     }
 #endif
-#if _LIBCPP_DEBUG_LEVEL >= 1
-    {
-        typedef std::unordered_multimap<int, std::string> C;
-        C c;
-        (void) c.bucket_size(3);
-        assert(false);
-    }
-#endif
 
-  return 0;
+    return 0;
 }

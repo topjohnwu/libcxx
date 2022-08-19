@@ -8,12 +8,8 @@
 
 // <string>
 
-// const_reference operator[](size_type pos) const;
-//       reference operator[](size_type pos);
-
-#ifdef _LIBCPP_DEBUG
-#define _LIBCPP_ASSERT(x, m) ((x) ? (void)0 : std::exit(0))
-#endif
+// const_reference operator[](size_type pos) const; // constexpr since C++20
+//       reference operator[](size_type pos); // constexpr since C++20
 
 #include <string>
 #include <cassert>
@@ -21,9 +17,8 @@
 #include "test_macros.h"
 #include "min_allocator.h"
 
-int main(int, char**)
-{
-    {
+TEST_CONSTEXPR_CXX20 bool test() {
+  {
     typedef std::string S;
     S s("0123456789");
     const S& cs = s;
@@ -39,9 +34,9 @@ int main(int, char**)
     assert(cs[cs.size()] == '\0');
     const S s2 = S();
     assert(s2[0] == '\0');
-    }
+  }
 #if TEST_STD_VER >= 11
-    {
+  {
     typedef std::basic_string<char, std::char_traits<char>, min_allocator<char>> S;
     S s("0123456789");
     const S& cs = s;
@@ -57,16 +52,17 @@ int main(int, char**)
     assert(cs[cs.size()] == '\0');
     const S s2 = S();
     assert(s2[0] == '\0');
-    }
+  }
 #endif
-#ifdef _LIBCPP_DEBUG
-    {
-        std::string s;
-        char c = s[0];
-        assert(c == '\0');
-        c = s[1];
-        assert(false);
-    }
+
+  return true;
+}
+
+int main(int, char**)
+{
+  test();
+#if TEST_STD_VER > 17
+  static_assert(test());
 #endif
 
   return 0;

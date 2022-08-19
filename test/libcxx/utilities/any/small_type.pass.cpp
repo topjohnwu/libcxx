@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03, c++11, c++14
+// UNSUPPORTED: c++03, c++11, c++14
 
 // <any>
 
@@ -57,7 +57,6 @@ struct alignas(DoubleBufferAlignment) OverSizeAndAlignedType {
 
 int main(int, char**)
 {
-    using std::any;
     using std::__any_imp::_IsSmallObject;
     static_assert(_IsSmallObject<small>::value, "");
     static_assert(_IsSmallObject<void*>::value, "");

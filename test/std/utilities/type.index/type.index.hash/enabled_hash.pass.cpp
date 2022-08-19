@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 
 // <typeindex>
 
@@ -14,6 +14,8 @@
 // hash specializations.
 
 #include <typeindex>
+
+#include <functional>
 
 #include "poisoned_hash_helper.h"
 

@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// UNSUPPORTED: libcpp-has-no-threads
+// UNSUPPORTED: no-threads
 
 // <memory>
 
@@ -16,7 +16,7 @@
 // bool
 // atomic_is_lock_free(const shared_ptr<T>* p);
 
-// UNSUPPORTED: c++98, c++03
+// UNSUPPORTED: c++03
 
 #include <memory>
 #include <cassert>
