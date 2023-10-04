@@ -87,6 +87,7 @@ TEST_CASE(equivalent_reports_error_if_input_dne) {
   }
 }
 
+#if !defined(__ANDROID__)
 TEST_CASE(equivalent_hardlink_succeeds) {
   scoped_test_env env;
   path const file = env.create_file("file", 42);
@@ -96,8 +97,9 @@ TEST_CASE(equivalent_hardlink_succeeds) {
   TEST_CHECK(equivalent(file, hl2));
   TEST_CHECK(equivalent(hl1, hl2));
 }
+#endif
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
 TEST_CASE(equivalent_is_other_succeeds) {
   scoped_test_env env;
   path const file = env.create_file("file", 42);

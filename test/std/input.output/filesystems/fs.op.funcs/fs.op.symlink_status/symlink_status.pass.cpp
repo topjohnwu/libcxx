@@ -129,10 +129,10 @@ TEST_CASE(symlink_status_file_types_test)
 #ifndef _WIN32
         {static_env.CharFile, file_type::character},
 #endif
-#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(_WIN32) // No support for domain sockets
+#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(_WIN32) && !defined(__ANDROID__) // No support for domain sockets
         {env.create_socket("socket"), file_type::socket},
 #endif
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
         {env.create_fifo("fifo"), file_type::fifo}
 #endif
     };

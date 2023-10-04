@@ -136,8 +136,16 @@ TEST_CASE(basic_tests)
         std::error_code ec = GetTestEC();
         path ret = temp_directory_path(ec);
         TEST_CHECK(!ec);
-#ifndef _WIN32
+#if defined(_WIN32)
         // On Windows, the function falls back to the Windows folder.
+        wchar_t win_dir[MAX_PATH];
+        DWORD win_dir_sz = GetWindowsDirectoryW(win_dir, MAX_PATH);
+        TEST_CHECK(win_dir_sz > 0 && win_dir_sz < MAX_PATH);
+        TEST_CHECK(win_dir[win_dir_sz-1] != L'\\');
+        TEST_CHECK(ret == win_dir);
+#elif defined(__ANDROID__)
+        TEST_CHECK(ret == "/data/local/tmp");
+#else
         TEST_CHECK(ret == "/tmp");
 #endif
         TEST_CHECK(is_directory(ret));

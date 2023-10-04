@@ -113,7 +113,7 @@ TEST_CASE(test_directory_access_denied)
 }
 
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
 TEST_CASE(test_fifo_fails)
 {
     scoped_test_env env;

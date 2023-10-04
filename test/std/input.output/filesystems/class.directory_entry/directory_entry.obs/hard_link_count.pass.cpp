@@ -72,6 +72,7 @@ TEST_CASE(basic) {
     TEST_CHECK(ent.hard_link_count(ec) == expect);
     TEST_CHECK(!ec);
   }
+#if !defined(__ANDROID__)
   env.create_file("file", 99);
   env.create_hardlink("file", "hl");
   {
@@ -80,6 +81,7 @@ TEST_CASE(basic) {
     TEST_CHECK(ent.hard_link_count(ec) == 2);
     TEST_CHECK(!ec);
   }
+#endif
 }
 
 TEST_CASE(not_regular_file) {
@@ -107,7 +109,7 @@ TEST_CASE(not_regular_file) {
     permissions(dir, old_perms);
   };
   test_path(dir2);
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
   const path fifo = env.create_fifo("dir/fifo");
   const path sym_to_fifo = env.create_symlink("dir/fifo", "dir/sym");
   test_path(fifo);

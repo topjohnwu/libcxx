@@ -87,7 +87,7 @@ TEST_CASE(not_regular_file) {
     std::errc expected_err;
   } TestCases[] = {
       {env.create_dir("dir"), std::errc::is_a_directory},
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
       {env.create_fifo("fifo"), std::errc::not_supported},
 #endif
       {env.create_directory_symlink("dir", "sym"), std::errc::is_a_directory}};

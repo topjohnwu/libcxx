@@ -77,7 +77,7 @@ TEST_CASE(test_error_reporting) {
   }
 }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
 TEST_CASE(non_regular_file_test) {
   scoped_test_env env;
   const path fifo = env.create_fifo("fifo");

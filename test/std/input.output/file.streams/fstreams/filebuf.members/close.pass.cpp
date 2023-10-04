@@ -42,12 +42,18 @@ int main(int, char**)
         // Use the internal method to create filebuf from the file descriptor.
         assert(f.__open(fd, std::ios_base::out) != 0);
         assert(f.is_open());
+
+        // With Bionic, fdsan aborts the process when close() is called on an fd
+        // belonging to a FILE*, so disable this part of the test. See
+        // https://github.com/android/ndk/issues/1626.
+#if !defined(__BIONIC__)
         // Close the file descriptor directly to force filebuf::close to fail.
         assert(close(fd) == 0);
         // Ensure that filebuf::close handles the failure.
         assert(f.close() == nullptr);
         assert(!f.is_open());
         assert(f.close() == nullptr);
+#endif
     }
 #endif
     std::remove(temp.c_str());

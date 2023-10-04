@@ -3,7 +3,6 @@ set(LIBCXXABI_SOURCES
   # C++ABI files
   cxa_aux_runtime.cpp
   cxa_default_handlers.cpp
-  cxa_demangle.cpp
   cxa_exception_storage.cpp
   cxa_guard.cpp
   cxa_handlers.cpp
@@ -18,6 +17,12 @@ set(LIBCXXABI_SOURCES
   fallback_malloc.cpp
   private_typeinfo.cpp
 )
+
+if (NOT LIBCXXABI_STATIC_DEMANGLE_LIBRARY)
+  list(APPEND LIBCXXABI_SOURCES
+    cxa_demangle.cpp
+  )
+endif()
 
 if (LIBCXXABI_ENABLE_NEW_DELETE_DEFINITIONS)
   list(APPEND LIBCXXABI_SOURCES
@@ -158,6 +163,24 @@ if (NOT TARGET pstl::ParallelSTL)
   message(STATUS "Could not find ParallelSTL, libc++abi will not attempt to use it but the build may fail if the libc++ in use needs it to be available.")
 endif()
 
+if (LIBCXXABI_STATIC_DEMANGLE_LIBRARY)
+  add_library(cxxabi_demangle_static STATIC cxa_demangle.cpp ${LIBCXXABI_HEADERS})
+  target_link_libraries(cxxabi_demangle_static PRIVATE cxx-headers cxxabi-headers)
+  set_target_properties(cxxabi_demangle_static
+    PROPERTIES
+      CXX_EXTENSIONS OFF
+      CXX_STANDARD 20
+      CXX_STANDARD_REQUIRED OFF
+      COMPILE_FLAGS "${LIBCXXABI_COMPILE_FLAGS}"
+      LINK_FLAGS "${LIBCXXABI_LINK_FLAGS}"
+      OUTPUT_NAME "c++demangle"
+    )
+  list(APPEND LIBCXXABI_BUILD_TARGETS "cxxabi_demangle_static")
+  if (LIBCXXABI_INSTALL_STATIC_LIBRARY)
+    list(APPEND LIBCXXABI_INSTALL_TARGETS "cxxabi_demangle_static")
+  endif()
+endif()
+
 # Build the shared library.
 add_library(cxxabi_shared_objects OBJECT EXCLUDE_FROM_ALL ${LIBCXXABI_SOURCES} ${LIBCXXABI_HEADERS})
 if (LIBCXXABI_USE_LLVM_UNWINDER)
@@ -187,10 +210,21 @@ if (LIBCXXABI_ENABLE_SHARED)
   set_target_properties(cxxabi_shared
     PROPERTIES
       LINK_FLAGS "${LIBCXXABI_LINK_FLAGS}"
-      OUTPUT_NAME "c++abi"
+      OUTPUT_NAME "${LIBCXXABI_SHARED_OUTPUT_NAME}"
       SOVERSION "1"
       VERSION "${LIBCXXABI_LIBRARY_VERSION}"
   )
+
+  if (ZOS)
+    add_custom_command(TARGET cxxabi_shared POST_BUILD
+      COMMAND
+        ${LIBCXXABI_LIBCXX_PATH}/utils/zos_rename_dll_side_deck.sh
+        $<TARGET_LINKER_FILE_NAME:cxxabi_shared> $<TARGET_FILE_NAME:cxxabi_shared> "${LIBCXXABI_DLL_NAME}"
+      COMMENT "Rename dll name inside the side deck file"
+      WORKING_DIRECTORY $<TARGET_FILE_DIR:cxxabi_shared>
+    )
+  endif ()
+
   target_link_libraries(cxxabi_shared
     PUBLIC cxxabi_shared_objects
     PRIVATE ${LIBCXXABI_SHARED_LIBRARIES} ${LIBCXXABI_LIBRARIES})
@@ -274,7 +308,7 @@ if (LIBCXXABI_ENABLE_STATIC)
   set_target_properties(cxxabi_static
     PROPERTIES
       LINK_FLAGS "${LIBCXXABI_LINK_FLAGS}"
-      OUTPUT_NAME "c++abi"
+      OUTPUT_NAME "${LIBCXXABI_STATIC_OUTPUT_NAME}"
     )
   target_link_libraries(cxxabi_static
     PUBLIC cxxabi_static_objects

@@ -67,7 +67,7 @@ TEST_CASE(test_error_reporting)
     scoped_test_env env;
     const path file = env.create_file("file1", 42);
     const path dir = env.create_dir("dir");
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
     const path fifo = env.create_fifo("fifo");
     TEST_REQUIRE(is_other(fifo));
 #endif
@@ -98,7 +98,7 @@ TEST_CASE(test_error_reporting)
         TEST_REQUIRE(ec != test_ec);
         TEST_CHECK(checkThrow(dir, file, ec));
     }
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
     { // is_other(from)
         std::error_code ec = test_ec;
         fs::copy(fifo, dir, ec);
@@ -171,6 +171,7 @@ TEST_CASE(from_is_regular_file)
         TEST_CHECK(is_symlink(dest));
         TEST_CHECK(equivalent(file, canonical(dest)));
     }
+#if !defined(__ANDROID__) // SELinux restriction (maybe root shell would work?)
     { // create hard link to file
         const path dest = env.make_env_path("hardlink");
         TEST_CHECK(hard_link_count(file) == 1);
@@ -180,6 +181,7 @@ TEST_CASE(from_is_regular_file)
         TEST_CHECK(exists(dest));
         TEST_CHECK(hard_link_count(file) == 2);
     }
+#endif
     { // is_directory(t)
         const path dest_dir = env.create_dir("dest_dir");
         const path expect_dest = dest_dir / file.filename();

@@ -138,10 +138,23 @@ TEST_CASE(basic_permissions_test)
     }
 }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(__ANDROID__)
 // This test isn't currently meaningful on Windows; the Windows file
 // permissions visible via std::filesystem doesn't show any difference
 // between owner/group/others.
+//
+// Skip the test on Android because the behavior varies widely. A device
+// may do one of these things:
+//  - Ignore nofollow and modify the target (e.g. L emulator).
+//  - Refuse to let the shell user create a symlink (e.g. physical L device,
+//    volantis or Nexus 7 2013).
+//  - Change the symlink's permissions successfully (e.g. emulators from
+//    Android M to Q, ext4 filesystem).
+//  - Change the symlink's permissions, then fail with operation_not_supported
+//    anyway (e.g. R emulator and later, ext4 filesystem, see Google internal
+//    bug http://b/262631136).
+//  - Do nothing and fail with operation_not_supported (e.g. devices using f2fs
+//    for /data/local/tmp).
 TEST_CASE(test_no_resolve_symlink_on_symlink)
 {
     scoped_test_env env;

@@ -245,9 +245,14 @@ def hasAnyLocale(config, locales):
   %{exec} -- this means that the command may be executed on a remote host
   depending on the %{exec} substitution.
   """
+  # Bionic's locale support is simplistic: it only recognizes two locales, "C"
+  # (aka "POSIX") and "C.UTF-8" (aka "en_US.UTF-8"). The locale mode determines
+  # the MB_CUR_MAX, but there is no true locale stuff (e.g. number formatting).
+  # Treat Bionic as if it lacks locales.
   program = """
     #include <stddef.h>
-    #if defined(_LIBCPP_HAS_NO_LOCALIZATION)
+    #include <stdlib.h>
+    #if defined(_LIBCPP_HAS_NO_LOCALIZATION) || defined(__BIONIC__)
       int main(int, char**) { return 1; }
     #else
       #include <locale.h>
@@ -604,7 +609,7 @@ class Parameter(object):
   Parameters are used to customize the behavior of test suites in a user
   controllable way. There are two ways of setting the value of a Parameter.
   The first one is to pass `--param <KEY>=<VALUE>` when running Lit (or
-  equivalenlty to set `litConfig.params[KEY] = VALUE` somewhere in the
+  equivalently to set `litConfig.params[KEY] = VALUE` somewhere in the
   Lit configuration files. This method will set the parameter globally for
   all test suites being run.
 

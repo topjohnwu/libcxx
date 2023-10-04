@@ -45,6 +45,12 @@ TEST_CASE(test_error_reporting)
     }
 }
 
+// TODO(rprichard): For Android, the other create_hard_link calls are OK and
+// do not trip an SELinux error, because they fail for other reasons first.
+// If we add a "fs_hard_link" Lit feature, though, we may want to disable the
+// other calls here too. (Maybe this hard link stuff can be tested on Android
+// with root?)
+#if !defined(__ANDROID__)
 TEST_CASE(create_file_hard_link)
 {
     scoped_test_env env;
@@ -58,6 +64,7 @@ TEST_CASE(create_file_hard_link)
     TEST_CHECK(equivalent(dest, file));
     TEST_CHECK(hard_link_count(file) == 2);
 }
+#endif
 
 TEST_CASE(create_directory_hard_link_fails)
 {

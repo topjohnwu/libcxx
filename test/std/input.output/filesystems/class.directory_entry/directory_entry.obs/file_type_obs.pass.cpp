@@ -65,7 +65,9 @@ TEST_CASE(test_without_ec) {
   scoped_test_env env;
   path f = env.create_file("foo", 42);
   path d = env.create_dir("dir");
+#if !defined(__ANDROID__)
   path hl = env.create_hardlink("foo", "hl");
+#endif
   auto test_path = [=](const path &p) {
     directory_entry e(p);
     file_status st = status(p);
@@ -85,8 +87,10 @@ TEST_CASE(test_without_ec) {
   };
   test_path(f);
   test_path(d);
+#if !defined(__ANDROID__)
   test_path(hl);
-#ifndef _WIN32
+#endif
+#if !defined(_WIN32) && !defined(__ANDROID__)
   path fifo = env.create_fifo("fifo");
   test_path(fifo);
 #endif
@@ -101,7 +105,9 @@ TEST_CASE(test_with_ec) {
   scoped_test_env env;
   path f = env.create_file("foo", 42);
   path d = env.create_dir("dir");
+#if !defined(__ANDROID__)
   path hl = env.create_hardlink("foo", "hl");
+#endif
   auto test_path = [=](const path &p) {
     directory_entry e(p);
     std::error_code status_ec = GetTestEC();
@@ -149,8 +155,10 @@ TEST_CASE(test_with_ec) {
   };
   test_path(f);
   test_path(d);
+#if !defined(__ANDROID__)
   test_path(hl);
-#ifndef _WIN32
+#endif
+#if !defined(_WIN32) && !defined(__ANDROID__)
   path fifo = env.create_fifo("fifo");
   test_path(fifo);
 #endif

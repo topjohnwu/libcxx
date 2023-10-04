@@ -10732,7 +10732,8 @@ void test5()
     std::string nan= "nan";
     std::string NaN = "NAN";
     std::string nan_padding25 = "**********************";
-#if defined(TEST_HAS_GLIBC) || defined(_WIN32)
+#if defined(TEST_HAS_GLIBC) || defined(_WIN32) || \
+        (defined(__BIONIC__) && !defined(_LIBCPP_TESTING_ANDROID_PRINTF_NAN_NO_SIGN))
     std::string pnan_sign = "+";
     std::string pnan_padding25 = "*********************";
 #else

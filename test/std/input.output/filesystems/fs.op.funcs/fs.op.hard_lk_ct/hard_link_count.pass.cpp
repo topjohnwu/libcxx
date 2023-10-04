@@ -72,6 +72,8 @@ TEST_CASE(hard_link_count_for_directory)
                hard_link_count(static_env.Dir3, ec) == Dir3ExpectAlt ||
                hard_link_count(static_env.Dir3) == 1);
 }
+
+#if !defined(__ANDROID__)
 TEST_CASE(hard_link_count_increments_test)
 {
     scoped_test_env env;
@@ -81,7 +83,7 @@ TEST_CASE(hard_link_count_increments_test)
     env.create_hardlink(file, "file_hl");
     TEST_CHECK(hard_link_count(file) == 2);
 }
-
+#endif
 
 TEST_CASE(hard_link_count_error_cases)
 {
