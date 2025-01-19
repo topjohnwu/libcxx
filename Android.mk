@@ -7,58 +7,16 @@ LOCAL_PATH := $(call my-dir)
 libcxx_includes := $(LOCAL_PATH)/include $(LOCAL_PATH)/src
 libcxx_export_includes := $(libcxx_includes)
 libcxx_sources := \
-    algorithm.cpp \
-    any.cpp \
-    atomic.cpp \
-    barrier.cpp \
-    bind.cpp \
-    charconv.cpp \
-    chrono.cpp \
-    condition_variable.cpp \
-    condition_variable_destructor.cpp \
-    debug.cpp \
-    exception.cpp \
-    filesystem/directory_iterator.cpp \
-    filesystem/int128_builtins.cpp \
-    filesystem/operations.cpp \
-    functional.cpp \
-    future.cpp \
-    hash.cpp \
-    ios.cpp \
-    ios.instantiations.cpp \
-    iostream.cpp \
-    legacy_debug_handler.cpp \
-    legacy_pointer_safety.cpp \
-    locale.cpp \
-    memory.cpp \
-    memory_resource.cpp \
-    mutex.cpp \
-    mutex_destructor.cpp \
-    new.cpp \
-    optional.cpp \
-    random_shuffle.cpp \
-    random.cpp \
-    regex.cpp \
-    shared_mutex.cpp \
-    stdexcept.cpp \
-    string.cpp \
-    strstream.cpp \
-    system_error.cpp \
-    thread.cpp \
-    typeinfo.cpp \
-    utility.cpp \
-    valarray.cpp \
-    variant.cpp \
-    vector.cpp \
-    verbose_abort.cpp \
+    $(wildcard $(LOCAL_PATH)/src/*.cpp) \
+    $(wildcard $(LOCAL_PATH)/src/filesystem/*.cpp)
 
-libcxx_sources := $(libcxx_sources:%=src/%)
+libcxx_sources := $(libcxx_sources:$(LOCAL_PATH)/%=%)
 
 libcxx_export_cxxflags :=
 
 libcxx_cxxflags := \
-    -std=c++20 \
-    -fvisibility-global-new-delete-hidden \
+    -std=c++2c \
+    -fvisibility-global-new-delete=force-hidden \
     -fvisibility=hidden -fvisibility-inlines-hidden \
     -DLIBCXX_BUILDING_LIBCXXABI \
     -D_LIBCPP_NO_EXCEPTIONS \
@@ -91,9 +49,7 @@ libcxxabi_src_files := \
 
 libcxxabi_src_files := $(libcxxabi_src_files:%=src/abi/%)
 
-libcxxabi_includes := \
-    $(LOCAL_PATH)/include \
-    $(LOCAL_PATH)/include/abi \
+libcxxabi_includes := $(LOCAL_PATH)/include
 
 libcxxabi_cflags := -D__STDC_FORMAT_MACROS
 libcxxabi_cppflags := \
