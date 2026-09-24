@@ -10,8 +10,8 @@ ranges, iterators, concepts, type traits, utilities, smart pointer declarations,
 header/export-fragment set. Existing runtime limitations still apply: importing
 a declaration does not supply its missing out-of-line implementation. For
 example, the default-comparator integral `std::sort`/`std::ranges::sort` path
-requires runtime specializations absent from `abi.cpp`; the test uses a custom
-comparator to select the header-defined implementation.
+requires runtime specializations absent from `abi.cpp`; use a custom comparator
+to select the header-defined implementation.
 
 C library function exports (`std::printf`, `std::isalnum`, etc.), streams,
 localization, filesystem, regex, thread creation and futures are omitted.
@@ -49,7 +49,7 @@ compatible language/ABI flags; a single BMI cannot serve different C++ standards
 Each ABI and ndk-build configuration builds its own BMI. `abi.cpp` remains a
 separate target with its existing C++26 flags.
 
-This target is opt-in: ordinary Magisk builds do not build or import it.
+This target is opt-in through the `cxx_std` dependency.
 
 ## Source provenance
 
