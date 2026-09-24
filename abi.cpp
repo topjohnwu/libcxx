@@ -12,6 +12,7 @@
 #include <cstdio>
 
 namespace std {
+const nothrow_t nothrow{};
 void __throw_bad_alloc() { ::abort(); }
 }
 
