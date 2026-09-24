@@ -9,7 +9,7 @@ endif
 # libcxx's exported headers, exception and RTTI settings, just like its users.
 include $(CLEAR_VARS)
 LOCAL_MODULE := cxx_std
-LOCAL_SRC_FILES := std.cppm
+LOCAL_MODULE_SRC_FILES := std.cppm
 LOCAL_CPPFLAGS := -Wno-reserved-module-identifier
 LOCAL_STATIC_LIBRARIES := libcxx
 LOCAL_EXPORT_STATIC_LIBRARIES := libcxx

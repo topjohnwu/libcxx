@@ -39,9 +39,10 @@ include $(BUILD_EXECUTABLE_MODULE)
 ```
 
 `main.cpp` can use `import std;`. The `cxx_std` target exports the BMI mapping and
-the libcxx dependency. The existing module scanner supplies compilation ordering
-and transitive import mappings. Exporting a compiler flag alone does not establish
-that ordering for an ordinary `BUILD_EXECUTABLE` consumer.
+the libcxx dependency, declaring `std.cppm` in `LOCAL_MODULE_SRC_FILES` as a BMI
+provider. Consumers stay in `LOCAL_SRC_FILES`. The module scanner supplies
+compilation ordering and transitive import mappings. Exporting a compiler flag
+alone does not establish that ordering for an ordinary `BUILD_EXECUTABLE` consumer.
 
 Select C++23 or newer in `APP_CPPFLAGS`. The provider and consumers must use
 compatible language/ABI flags; a single BMI cannot serve different C++ standards.
